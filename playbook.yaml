@@ -1,7 +1,7 @@
 ---
 # playbook.yaml
 - name: "Create Approle Wrapped Secret ID"
-  hosts: AWS
+  hosts: tag_vault_agent_true
   gather_facts: true
 
   tasks:
