@@ -1,5 +1,0 @@
-all:
-  children:
-    vault_agent:
-      hosts:
-        54.206.82.255
