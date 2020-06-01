@@ -1,6 +1,7 @@
 ---
 # playbook.yaml
 - name: "Create Approle Wrapped Secret ID"
+  hosts: default
   gather_facts: true
 
   tasks:
