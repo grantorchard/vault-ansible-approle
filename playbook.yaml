@@ -1,31 +1,29 @@
 ---
 # playbook.yaml
 - name: "Create Approle Wrapped Secret ID"
-  hosts: vault_agent
   gather_facts: true
 
   tasks:
     - name: Create approle secret-id
-        local_action:
-          module: hashivault_approle_role_secret
-          verify: false
-          name: "{{ ansible_facts['nodename'] }}"
-          wrap_ttl: 5m
-        register: vault_approle_role_secret_create
+      local_action:
+        module: hashivault_approle_role_secret
+        verify: false
+        auth_method: approle
+        name: "{{ ansible_facts['nodename'] }}"
+        wrap_ttl: 5m
+      register: vault_approle_role_secret_create
 
     - name: Write wrapped token to remote host
-        lineinfile:
-          state: present
-          create: true
-          line: "{{vault_approle_role_secret_create.wrap_info.token}}"
-          path: /etc/vault.d/secretid
-        become: true
-        become_method: sudo
+      lineinfile:
+        state: present
+        create: true
+        line: "{{vault_approle_role_secret_create.wrap_info.token}}"
+        path: /etc/vault.d/secretid
+      become: true
+      become_method: sudo
 
     - name: Start Vault
-        systemd:
-          name: vault
-          enabled: yes
-          state: started
-
-    - debug: var=ansible_facts
+      systemd:
+        name: vault
+        enabled: yes
+        state: started
