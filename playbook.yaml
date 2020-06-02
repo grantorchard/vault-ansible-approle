@@ -9,7 +9,7 @@
       local_action:
         module: hashivault_approle_role_secret
         verify: false
-        auth_method: approle
+        authtype: approle
         name: "{{ ansible_facts['nodename'] }}"
         wrap_ttl: 5m
       register: vault_approle_role_secret_create
