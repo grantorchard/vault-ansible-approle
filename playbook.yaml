@@ -6,12 +6,14 @@
 
   tasks:
     - debug: msg="{{ lookup('env','VAULT_SECRET_ID') }} is the secret id."
+    - debug: msg="{{ ansible_facts['nodename'] }}"
     - name: Create approle secret-id
       local_action:
         module: hashivault_approle_role_secret
         state: present
         verify: false
         authtype: approle
+        secret_id: "{{ lookup('env','VAULT_SECRET_ID') }}"
         name: "{{ ansible_facts['nodename'] }}"
         wrap_ttl: 5m
       register: vault_approle_role_secret_create
