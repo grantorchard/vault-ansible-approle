@@ -8,6 +8,7 @@
     - name: Create approle secret-id
       local_action:
         module: hashivault_approle_role_secret
+        state: present
         verify: false
         authtype: approle
         name: "{{ ansible_facts['nodename'] }}"
