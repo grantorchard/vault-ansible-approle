@@ -5,6 +5,7 @@
   gather_facts: true
 
   tasks:
+    - debug: msg="{{ lookup('env','VAULT_SECRET_ID') }} is the secret id."
     - name: Create approle secret-id
       local_action:
         module: hashivault_approle_role_secret
